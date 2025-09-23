@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My GitHub Page</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <h1>Hello, GitHub Pages!</h1>
-    <button id="clickMe">Click me</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfectionism Questionnaire</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Perfectionism Questionnaire</h1>
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+      <p class="progress-text" id="progressText">Question 1 of 45</p>
 
-    <script src="js/script.js"></script>
-</body>
+      <div class="question-container">
+        <div class="question-number" id="questionNumber">1.</div>
+        <div class="question-text" id="questionText"></div>
+
+        <div class="rating-scale">
+          <div class="scale-labels">
+            <span>Strongly Disagree</span>
+            <span>Strongly Agree</span>
+          </div>
+          <div class="rating-buttons" id="ratingButtons">
+            <button class="rating-btn" data-value="1">1</button>
+            <button class="rating-btn" data-value="2">2</button>
+            <button class="rating-btn" data-value="3">3</button>
+            <button class="rating-btn" data-value="4">4</button>
+            <button class="rating-btn" data-value="5">5</button>
+            <button class="rating-btn" data-value="6">6</button>
+            <button class="rating-btn" data-value="7">7</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="navigation">
+        <button id="prevBtn" class="nav-btn" disabled>Previous</button>
+        <button id="nextBtn" class="nav-btn" disabled>Next</button>
+        <button id="finishBtn" class="nav-btn finish-btn" style="display: none">
+          Finish
+        </button>
+      </div>
+
+      <div id="results" class="results" style="display: none">
+        <h2>Thank you for completing the questionnaire!</h2>
+        <p>Your responses have been recorded.</p>
+      </div>
+    </div>
+
+    <script type="module" src="js/script.js"></script>
+  </body>
 </html>
