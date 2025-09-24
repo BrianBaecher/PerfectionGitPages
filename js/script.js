@@ -152,8 +152,8 @@ class Questionnaire {
   }
 }
 
-class Grader{
-    /* 
+class Grader {
+  /* 
     To score the MPS, first, the following items should be reversed:
     2, 3, 4, 8, 9, 10, 12, 19, 21, 24, 30, 34, 36, 37, 38, 43, 44, 45
     
@@ -167,50 +167,66 @@ class Grader{
     5, 9, 11, 13, 18, 21, 25, 30, 31, 33, 35, 37, 39, 41, 44
     */
 
-   MPS_NUMS = new Set(2, 3, 4, 8, 9, 10, 12, 19, 21, 24, 30, 34, 36, 37, 38, 43, 44, 45);
-   SOP_NUMS = new Set(1, 6, 8, 12,14,15,17, 20, 23, 28, 32, 34, 36, 40, 42)
-   OOP_NUMS = new Set(2, 3, 4, 7, 10, 16, 19, 22, 24, 26, 27, 29, 38, 43, 45);
-   SPP_NUMS = new Set(5, 9, 11, 13, 18, 21, 25, 30, 31, 33, 35, 37, 39, 41, 44);
+  MPS_NUMS = new Set(
+    2,
+    3,
+    4,
+    8,
+    9,
+    10,
+    12,
+    19,
+    21,
+    24,
+    30,
+    34,
+    36,
+    37,
+    38,
+    43,
+    44,
+    45
+  );
+  SOP_NUMS = new Set(1, 6, 8, 12, 14, 15, 17, 20, 23, 28, 32, 34, 36, 40, 42);
+  OOP_NUMS = new Set(2, 3, 4, 7, 10, 16, 19, 22, 24, 26, 27, 29, 38, 43, 45);
+  SPP_NUMS = new Set(5, 9, 11, 13, 18, 21, 25, 30, 31, 33, 35, 37, 39, 41, 44);
 
-   MPS_score;
-   SOP_score;
-   OOP_score;
-   SPP_score;
+  MPS_score;
+  SOP_score;
+  OOP_score;
+  SPP_score;
 
-   /**
-    *
-    */
-   constructor(answers) {
-    super();
-    for(i = 0; i < answers.length; i++){
-        orderNum = i + 1;
-        if(this.MPS_NUMS.has(orderNum) ){
-            this.MPS_score += this.reverseScore(answers[i])
-        }else{
-            this.MPS_score+=answers[i];
-        }
+  /**
+   *
+   */
+  constructor(answers) {
+    for (i = 0; i < answers.length; i++) {
+      orderNum = i + 1;
+      if (this.MPS_NUMS.has(orderNum)) {
+        this.MPS_score += this.reverseScore(answers[i]);
+      } else {
+        this.MPS_score += answers[i];
+      }
 
-        if(this.SOP_NUMS.has(orderNum)){
-            this.SOP_score += answers[i];
-        }
+      if (this.SOP_NUMS.has(orderNum)) {
+        this.SOP_score += answers[i];
+      }
 
-        if(this.OOP_NUMS.has(orderNum)){
-            this.OOP_score += answers[i];
-        }
+      if (this.OOP_NUMS.has(orderNum)) {
+        this.OOP_score += answers[i];
+      }
 
-        if(this.SPP_NUMS.has(orderNum)){
-            this.SPP_score += answers[i];
-        }
+      if (this.SPP_NUMS.has(orderNum)) {
+        this.SPP_score += answers[i];
+      }
     }
-   }
+  }
 
-   reverseScore(score) {
-        const ansScaleReversed = [7,6,5,4,3,2,1];
-        return ansScaleReversed[score-1];
-   }
+  reverseScore(score) {
+    const ansScaleReversed = [7, 6, 5, 4, 3, 2, 1];
+    return ansScaleReversed[score - 1];
+  }
 }
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
   new Questionnaire();
