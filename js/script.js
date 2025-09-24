@@ -132,37 +132,86 @@ class Questionnaire {
       return;
     }
 
-    // Hide questionnaire and show results
+    grader = new Grader(this.answers);
+
+    mpsScoreText = document.getElementById("mps-score");
+    sopScoreText = document.getElementById("sop-score");
+    oopScoreText = document.getElementById("oop-score");
+    sppScoreText = document.getElementById("spp-score");
+
     document.querySelector(".question-container").style.display = "none";
     document.querySelector(".navigation").style.display = "none";
     document.querySelector(".progress-bar").style.display = "none";
     document.querySelector(".progress-text").style.display = "none";
     document.getElementById("results").style.display = "block";
 
-    // Log results to console (you can process these however you need)
-    console.log("Questionnaire Results:", this.answers);
-    console.log(
-      "Total Score:",
-      this.answers.reduce((sum, score) => sum + score, 0)
-    );
-
-    // You can add code here to save results to a database, local storage, etc.
-    this.saveResults();
-  }
-
-  saveResults() {
-    // Save to localStorage for now
-    const results = {
-      timestamp: new Date().toISOString(),
-      answers: this.answers,
-      totalScore: this.answers.reduce((sum, score) => sum + score, 0),
-    };
-
-    localStorage.setItem("perfectionismResults", JSON.stringify(results));
+    mpsScoreText.textContent = `Multi-Dimensional Perfectionism Scale: ${grader.MPS_score}`;
+    sopScoreText.textContent = `Self-Oriented Perfectionism Scale: ${grader.SOP_score}`;
+    oopScoreText.textContent = `Other-Oriented Perfectionism Scale: ${grader.OOP_score}`;
+    sppScoreText.textContent = `Socially Prescribed Perfectionism Scale: ${grader.SPP_score}`;
   }
 }
 
-// Initialize the questionnaire when the page loads
+class Grader{
+    /* 
+    To score the MPS, first, the following items should be reversed:
+    2, 3, 4, 8, 9, 10, 12, 19, 21, 24, 30, 34, 36, 37, 38, 43, 44, 45
+    
+    The self-oriented perfectionism subscale is scored by summing:
+    1, 6, 8, 12,14,15,17 20, 23, 28, 32, 34, 36, 40, 42
+    
+    The other-oriented perfectionism subscale is scored by summing:
+    2, 3, 4, 7, 10, 16, 19, 22, 24, 26, 27, 29, 38, 43, 45
+    
+    The socially prescribed perfectionism subscale is scored by summing:
+    5, 9, 11, 13, 18, 21, 25, 30, 31, 33, 35, 37, 39, 41, 44
+    */
+
+   MPS_NUMS = new Set(2, 3, 4, 8, 9, 10, 12, 19, 21, 24, 30, 34, 36, 37, 38, 43, 44, 45);
+   SOP_NUMS = new Set(1, 6, 8, 12,14,15,17, 20, 23, 28, 32, 34, 36, 40, 42)
+   OOP_NUMS = new Set(2, 3, 4, 7, 10, 16, 19, 22, 24, 26, 27, 29, 38, 43, 45);
+   SPP_NUMS = new Set(5, 9, 11, 13, 18, 21, 25, 30, 31, 33, 35, 37, 39, 41, 44);
+
+   MPS_score;
+   SOP_score;
+   OOP_score;
+   SPP_score;
+
+   /**
+    *
+    */
+   constructor(answers) {
+    super();
+    for(i = 0; i < answers.length; i++){
+        orderNum = i + 1;
+        if(this.MPS_NUMS.has(orderNum) ){
+            this.MPS_score += this.reverseScore(answers[i])
+        }else{
+            this.MPS_score+=answers[i];
+        }
+
+        if(this.SOP_NUMS.has(orderNum)){
+            this.SOP_score += answers[i];
+        }
+
+        if(this.OOP_NUMS.has(orderNum)){
+            this.OOP_score += answers[i];
+        }
+
+        if(this.SPP_NUMS.has(orderNum)){
+            this.SPP_score += answers[i];
+        }
+    }
+   }
+
+   reverseScore(score) {
+        const ansScaleReversed = [7,6,5,4,3,2,1];
+        return ansScaleReversed[score-1];
+   }
+}
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
   new Questionnaire();
 });
